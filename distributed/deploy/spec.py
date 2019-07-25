@@ -229,7 +229,7 @@ class SpecCluster(Cluster):
         while {
             str(d["name"])
             for d in (await self.scheduler_comm.identity())["workers"].values()
-        } != set(map(str, self.workers)):
+        } != {worker.address for worker in self.workers.values()}:
             if (
                 any(w.status == "closed" for w in self.workers.values())
                 and self.scheduler.status == "running"
